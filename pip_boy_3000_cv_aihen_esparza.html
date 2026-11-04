@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pip-Boy 3000 - Curriculum Vitae de Aihen Esparza</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts for Retro Monospace Aesthetics -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    /* Dynamic Theme Color Variables */
+    :root {
+      --main-color: #00ff66;
+      --main-dim: rgba(0, 255, 102, 0.25);
+      --main-glow: rgba(0, 255, 102, 0.6);
+      --bg-dark: #020d04;
+      --panel-bg: rgba(0, 25, 8, 0.85);
+      --border-color: #00ff66;
+      --amber-color: #ffb000;
+      --blue-color: #00e5ff;
+      --white-color: #e0e0e0;
+    }
+
+    /* Color Theme Overrides */
+    body.theme-amber {
+      --main-color: #ffb000;
+      --main-dim: rgba(255, 176, 0, 0.25);
+      --main-glow: rgba(255, 176, 0, 0.6);
+      --bg-dark: #120b00;
+      --panel-bg: rgba(28, 16, 0, 0.85);
+      --border-color: #ffb000;
+    }
+
+    body.theme-blue {
+      --main-color: #00e5ff;
+      --main-dim: rgba(0, 229, 255, 0.25);
+      --main-glow: rgba(0, 229, 255, 0.6);
+      --bg-dark: #001017;
+      --panel-bg: rgba(0, 24, 33, 0.85);
+      --border-color: #00e5ff;
+    }
+
+    body.theme-white {
+      --main-color: #e0e0e0;
+      --main-dim: rgba(224, 224, 224, 0.25);
+      --main-glow: rgba(224, 224, 224, 0.6);
+      --bg-dark: #0f0f0f;
+      --panel-bg: rgba(28, 28, 28, 0.85);
+      --border-color: #e0e0e0;
+    }
+
+    /* General Typography & Layout */
+    body {
+      background-color: #080a08;
+      color: var(--main-color);
+      font-family: 'Share Tech Mono', monospace;
+      user-select: none;
+      overflow-x: hidden;
+    }
+
+    .font-vt323 {
+      font-family: 'VT323', monospace;
+    }
+
+    /* CRT Phosphor Glow Effect */
+    .pip-glow {
+      text-shadow: 0 0 4px var(--main-glow), 0 0 10px var(--main-glow);
+    }
+    
+    .pip-box-glow {
+      box-shadow: 0 0 12px var(--main-dim), inset 0 0 8px var(--main-dim);
+    }
+
+    .pip-border {
+      border: 2px solid var(--main-color);
+    }
+
+    /* CRT Scanlines Overlay */
+    .scanlines {
+      position: relative;
+    }
+    .scanlines::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      z-index: 40;
+      background-size: 100% 3px, 6px 100%;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    /* CRT Screen Curvature & Flicker */
+    .crt-screen {
+      background-color: var(--bg-dark);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.9);
+      transition: background-color 0.3s ease;
+    }
+
+    .crt-flicker {
+      animation: flicker 0.15s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.97; }
+      100% { opacity: 1; }
+    }
+
+    /* CRT Curved Glass Light Reflection */
+    .glass-reflection {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 45%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 60%);
+      pointer-events: none;
+      z-index: 42;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+      border: 1px solid var(--main-dim);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--main-color);
+      border-radius: 2px;
+    }
+
+    /* Pip-Boy Navigation Tabs */
+    .nav-btn {
+      background: transparent;
+      color: var(--main-color);
+      border: 2px solid transparent;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .nav-btn.active {
+      background: var(--main-color);
+      color: var(--bg-dark);
+      font-weight: bold;
+      box-shadow: 0 0 15px var(--main-glow);
+    }
+    .nav-btn:hover:not(.active) {
+      border-color: var(--main-color);
+      background: var(--main-dim);
+    }
+
+    /* Sub-tab buttons */
+    .sub-btn {
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+    .sub-btn.active {
+      border-bottom-color: var(--main-color);
+      opacity: 1;
+      font-weight: bold;
+    }
+
+    /* Vault-Boy Limb Animation */
+    @keyframes pulse-limb {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .limb-ok { fill: var(--main-color); }
+    .limb-anim { animation: pulse-limb 2s infinite ease-in-out; }
+
+    /* Meter Progress Bar */
+    .meter-bar {
+      height: 14px;
+      background: var(--main-dim);
+      border: 1px solid var(--main-color);
+      position: relative;
+      overflow: hidden;
+    }
+    .meter-fill {
+      height: 100%;
+      background-color: var(--main-color);
+      box-shadow: 0 0 8px var(--main-glow);
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Custom Selection Styling */
+    ::selection {
+      background: var(--main-color);
+      color: var(--bg-dark);
+    }
+
+    /* Print Stylesheet Overrides */
+    @media print {
+      body {
+        background: white !important;
+        color: black !important;
+        font-family: Arial, sans-serif !important;
+      }
+      .no-print, .pip-casing, .glass-reflection, .scanlines::before {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      .crt-screen {
+        background: white !important;
+        box-shadow: none !important;
+        border: none !important;
+        color: black !important;
+      }
+      .pip-glow, .pip-box-glow {
+        text-shadow: none !important;
+        box-shadow: none !important;
+      }
+      .pip-border {
+        border-color: #333 !important;
+      }
+      .meter-fill {
+        background-color: #333 !important;
+      }
+    }
+  </style>
+</head>
+<body class="p-2 sm:p-4 md:p-6 min-h-screen flex items-center justify-center bg-neutral-950">
+
+  <!-- ==================== MAIN PIP-BOY PHYSICAL CASING ==================== -->
+  <div class="pip-casing w-full max-w-6xl bg-neutral-900 rounded-3xl p-3 sm:p-6 border-4 border-neutral-800 shadow-2xl relative">
+    
+    <!-- Outer Metallic Screws Decor -->
+    <div class="absolute top-3 left-3 w-3 h-3 rounded-full bg-neutral-700 border border-neutral-950 shadow-inner"></div>
+    <div class="absolute top-3 right-3 w-3 h-3 rounded-full bg-neutral-700 border border-neutral-950 shadow-inner"></div>
+    <div class="absolute bottom-3 left-3 w-3 h-3 rounded-full bg-neutral-700 border border-neutral-950 shadow-inner"></div>
+    <div class="absolute bottom-3 right-3 w-3 h-3 rounded-full bg-neutral-700 border border-neutral-950 shadow-inner"></div>
+
+    <!-- Hardware Top Controls & Brand Plate -->
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-3 px-2 no-print">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-3 h-3 rounded-full bg-red-600 animate-pulse"></span>
+        <span class="text-xs tracking-widest text-neutral-400 font-bold uppercase">ROBCO INDUSTRIES PIP-BOY 3000 EDITION</span>
+      </div>
+
+      <!-- Control Switches (Audio, Scanlines, Themes, Print) -->
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        <!-- Audio Mute Toggle -->
+        <button id="btn-sound" onclick="toggleSound()" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700 transition flex items-center gap-1">
+          <span id="sound-icon">🔊</span> <span id="sound-text">SONIDO: ON</span>
+        </button>
+
+        <!-- Scanline FX Toggle -->
+        <button onclick="toggleScanlines()" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700 transition">
+          CRT FX
+        </button>
+
+        <!-- Color Theme Switcher -->
+        <div class="flex items-center gap-1 bg-neutral-800 p-1 rounded border border-neutral-700">
+          <button onclick="setTheme('green')" class="w-4 h-4 rounded-full bg-[#00ff66] border border-black hover:scale-110 transition" title="Verde Pip-Boy"></button>
+          <button onclick="setTheme('amber')" class="w-4 h-4 rounded-full bg-[#ffb000] border border-black hover:scale-110 transition" title="Ámbar Refugio"></button>
+          <button onclick="setTheme('blue')" class="w-4 h-4 rounded-full bg-[#00e5ff] border border-black hover:scale-110 transition" title="Azul Vault-Tec"></button>
+          <button onclick="setTheme('white')" class="w-4 h-4 rounded-full bg-[#e0e0e0] border border-black hover:scale-110 transition" title="Monocromo"></button>
+        </div>
+
+        <!-- Terminal Hack Easter Egg Trigger -->
+        <button onclick="openTerminalHack()" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-yellow-400 border border-yellow-600/50 transition flex items-center gap-1">
+          <span>⚡</span> HACK TERMINAL
+        </button>
+
+        <!-- Print / PDF Export Button -->
+        <button onclick="triggerPrint()" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700 transition">
+          🖨️ IMPRIMIR / PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== CRT SCREEN CONTAINER ==================== -->
+    <div id="crt-container" class="crt-screen scanlines crt-flicker p-3 sm:p-6 min-h-[640px] flex flex-col justify-between border-2 border-neutral-800">
+      <div class="glass-reflection"></div>
+
+      <!-- PIP-BOY TOP HEADER STATUS BAR -->
+      <header class="border-b-2 border-[var(--main-color)] pb-3 mb-4">
+        <!-- Main Pip-Boy Tabs -->
+        <nav class="grid grid-cols-5 gap-1 sm:gap-2 text-center text-sm sm:text-base font-bold mb-3">
+          <button onclick="switchTab('stat')" id="tab-stat" class="nav-btn py-1.5 rounded active">ESTAD.</button>
+          <button onclick="switchTab('special')" id="tab-special" class="nav-btn py-1.5 rounded">S.P.E.C.I.A.L.</button>
+          <button onclick="switchTab('data')" id="tab-data" class="nav-btn py-1.5 rounded">DATOS</button>
+          <button onclick="switchTab('items')" id="tab-items" class="nav-btn py-1.5 rounded">INV</button>
+          <button onclick="switchTab('radio')" id="tab-radio" class="nav-btn py-1.5 rounded">RADIO</button>
+        </nav>
+
+        <!-- User Stats Header Line -->
+        <div class="flex flex-wrap items-center justify-between text-xs sm:text-sm pt-1 px-1 gap-2 pip-glow">
+          <div class="flex items-center gap-3">
+            <span class="font-bold tracking-wider">AIHEN ESPARZA</span>
+            <span class="px-1.5 py-0.5 bg-[var(--main-dim)] border border-[var(--main-color)] rounded">NVL 28</span>
+            <span class="hidden md:inline opacity-80">REFUGIO 101 - DESARROLLADOR OVERSEER</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div>HP <span class="font-bold">100/100</span></div>
+            <div>AP <span class="font-bold">95/95</span></div>
+            <div>CAPS <span class="font-bold text-yellow-400">4,500 Ͼ</span></div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ==================== MAIN CONTENT AREA ==================== -->
+      <main class="flex-grow relative z-10 py-2">
+
+        <!-- 1. TAB: ESTADÍSTICAS (STAT) -->
+        <section id="content-stat" class="tab-content block">
+          <!-- STAT Sub-navigation -->
+          <div class="flex gap-4 border-b border-[var(--main-dim)] pb-2 mb-4 text-sm font-bold">
+            <button onclick="switchSubTab('stat', 'estado')" id="subtab-stat-estado" class="sub-btn active">ESTADO</button>
+            <button onclick="switchSubTab('stat', 'general')" id="subtab-stat-general" class="sub-btn">GENERAL</button>
+            <button onclick="switchSubTab('stat', 'bio')" id="subtab-stat-bio" class="sub-btn">BIOGRAFÍA</button>
+          </div>
+
+          <!-- Sub-Tab: ESTADO -->
+          <div id="subcontent-stat-estado" class="subcontent">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+              
+              <!-- Vault Boy Interactive SVG Graphics -->
+              <div class="flex flex-col items-center justify-center p-4 border border-[var(--main-dim)] rounded-lg bg-[var(--panel-bg)]">
+                <svg class="w-48 h-56 drop-shadow-md" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Vault Boy Head -->
+                  <circle cx="100" cy="55" r="32" stroke="var(--main-color)" stroke-width="3" fill="var(--bg-dark)" />
+                  <!-- Hair Wave -->
+                  <path d="M75 45 Q90 25 115 35 Q125 40 128 50 Q110 40 95 50 Z" fill="var(--main-color)" />
+                  <!-- Face Wink & Smile -->
+                  <circle cx="88" cy="55" r="3" fill="var(--main-color)" />
+                  <path d="M108 52 L116 56" stroke="var(--main-color)" stroke-width="3" stroke-linecap="round" />
+                  <path d="M88 68 Q100 80 112 68" stroke="var(--main-color)" stroke-width="3" fill="none" stroke-linecap="round" />
+                  
+                  <!-- Torso Suit -->
+                  <path d="M70 90 L130 90 L122 165 L78 165 Z" stroke="var(--main-color)" stroke-width="3" fill="var(--bg-dark)" class="limb-ok" />
+                  <path d="M100 90 L100 165" stroke="var(--main-color)" stroke-width="2" stroke-dasharray="3 3" />
+                  <!-- Vault 101 Number -->
+                  <text x="100" y="125" font-family="'Share Tech Mono', monospace" font-size="16" fill="var(--main-color)" font-weight="bold" text-anchor="middle">101</text>
+                  
+                  <!-- Left Arm (Thumbs Up) -->
+                  <path d="M70 95 L40 110 L30 90 L25 92 Q20 80 32 82 L42 98 Z" stroke="var(--main-color)" stroke-width="3" fill="var(--main-color)" class="limb-anim" />
+                  <!-- Right Arm -->
+                  <path d="M130 95 L155 120 L145 130" stroke="var(--main-color)" stroke-width="3" fill="none" stroke-linecap="round" />
+                  
+                  <!-- Legs -->
+                  <path d="M82 165 L80 220 L68 222 L68 228 L92 228 L92 165" stroke="var(--main-color)" stroke-width="3" fill="var(--bg-dark)" />
+                  <path d="M118 165 L120 220 L108 222 L108 228 L132 228 L132 165" stroke="var(--main-color)" stroke-width="3" fill="var(--bg-dark)" />
+                </svg>
+
+                <div class="mt-2 text-center text-xs font-bold tracking-widest uppercase pip-glow">
+                  CÓDIGO LIMPIO - ESTADO CEREBRAL ÓPTIMO
+                </div>
+              </div>
+
+              <!-- General Condition Breakdown -->
+              <div class="space-y-4">
+                <div class="p-3 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)]">
+                  <div class="flex justify-between text-sm mb-1 font-bold">
+                    <span>CÓDIGO LIMPIO & REFACTOR (HP)</span>
+                    <span>100%</span>
+                  </div>
+                  <div class="meter-bar"><div class="meter-fill" style="width: 100%;"></div></div>
+                </div>
+
+                <div class="p-3 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)]">
+                  <div class="flex justify-between text-sm mb-1 font-bold">
+                    <span>ENERGÍA DE RESOLUCIÓN (AP)</span>
+                    <span>95%</span>
+                  </div>
+                  <div class="meter-bar"><div class="meter-fill" style="width: 95%;"></div></div>
+                </div>
+
+                <div class="p-3 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)]">
+                  <div class="flex justify-between text-sm mb-1 font-bold">
+                    <span>RESISTENCIA A SPRINT DEADLINES</span>
+                    <span>98%</span>
+                  </div>
+                  <div class="meter-bar"><div class="meter-fill" style="width: 98%;"></div></div>
+                </div>
+
+                <div class="p-3 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)]">
+                  <div class="flex justify-between text-sm mb-1 font-bold">
+                    <span>ARQUITECTURA SCALABLE RADS</span>
+                    <span>0 RADS (LIMPIO)</span>
+                  </div>
+                  <div class="meter-bar"><div class="meter-fill" style="width: 5%;"></div></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Sub-Tab: GENERAL -->
+          <div id="subcontent-stat-general" class="subcontent hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div class="p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] space-y-2">
+                <p><span class="opacity-70">NOMBRE COMPLETO:</span> <strong class="pip-glow">Aihen Esparza</strong></p>
+                <p><span class="opacity-70">ROL:</span> <strong>Full-Stack Developer & Technical Specialist</strong></p>
+                <p><span class="opacity-70">UBICACIÓN:</span> <strong>España (Disponible para Remoto Global)</strong></p>
+                <p><span class="opacity-70">EXPERIENCIA:</span> <strong>+6 Años en el Yermo Digital</strong></p>
+                <p><span class="opacity-70">ESTADO LABORAL:</span> <strong class="text-green-400">DISPONIBLE PARA CONTRATACIÓN</strong></p>
+              </div>
+
+              <div class="p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] space-y-2">
+                <p><span class="opacity-70">IDIOMAS:</span> <strong>Español (Nativo) / Inglés (C1 Avanzado)</strong></p>
+                <p><span class="opacity-70">ESPECIALIDAD:</span> <strong>React, Node.js, Python, Arquitectura Cloud</strong></p>
+                <p><span class="opacity-70">ID DE REFUGIO:</span> <strong>VT-88204-AE</strong></p>
+                <p><span class="opacity-70">COMPATIBILIDAD:</span> <strong>Full-time / Lead Developer / Freelance</strong></p>
+                <p><span class="opacity-70">ÚLTIMO CHECKPOINT:</span> <strong>Sistemas 100% Operativos</strong></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab: BIOGRAFÍA -->
+          <div id="subcontent-stat-bio" class="subcontent hidden">
+            <div class="p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] text-sm sm:text-base leading-relaxed space-y-3">
+              <h3 class="text-lg font-bold border-b border-[var(--main-dim)] pb-1 pip-glow">REGISTRO DEL MORADOR - AIHEN ESPARZA</h3>
+              <p>
+                Superviviente de los entornos tecnológicos más exigentes. Durante los últimos 6 años he navegado por el Yermo del desarrollo web, convirtiendo código espagheti pre-guerra en arquitecturas sólidas, escalables e indestructibles.
+              </p>
+              <p>
+                Mi especialidad abarca la creación de interfaces dinámicas e intuitivas con frontend moderno (React, Next.js, Vue), respaldadas por motores de procesamiento backend de alto rendimiento (Node.js, Express, Python, PostgreSQL, Redis).
+              </p>
+              <p>
+                Apasionado por la optimización extrema, la seguridad de datos, el código modular y la resolución efectiva de bugs complejos en tiempos récord.
+              </p>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- 2. TAB: S.P.E.C.I.A.L. -->
+        <section id="content-special" class="tab-content hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            
+            <!-- Attribute Selector List -->
+            <div class="space-y-1">
+              <button onclick="selectSpecial('S')" id="spec-btn-S" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] transition flex justify-between items-center font-bold active">
+                <span>[S] FUERZA (STRENGTH)</span>
+                <span class="px-2 py-0.5 border border-[var(--main-color)] rounded text-xs">10/10</span>
+              </button>
+              <button onclick="selectSpecial('P')" id="spec-btn-P" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] transition flex justify-between items-center font-bold">
+                <span>[P] PERCEPCIÓN (PERCEPTION)</span>
+                <span class="px-2 py-0.5 border border-[var(--main-color)] rounded text-xs">9/10</span>
+              </button>
+              <button onclick="selectSpecial('E')" id="spec-btn-E" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] transition flex justify-between items-center font-bold">
+                <span>[E] RESISTENCIA (ENDURANCE)</span>
+                <span class="px-2 py-0.5 border border-[var(--main-color)] rounded text-xs">10/10</span>
+              </button>
+              <button onclick="selectSpecial('C')" id="spec-btn-C" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] transition flex justify-between items-center font-bold">
+                <span>[C] CARISMA (CHARISMA)</span>
+                <span class="px-2 py-0.5 border border-[var(--main-color)] rounded text-xs">9/10</span>
+              </button>
+              <button onclick="selectSpecial('I')" id="spec-btn-I" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] transition flex justify-between items-center font-bold">
+                <span>[I] INTELIGENCIA (INTELLIGENCE)</span>
+                <span class="px-2 py-0.5 border border-[var(--main-color)] rounded text-xs">10/10</span>
+              </button>
+              <button onclick="selectSpecial('A')" id="spec-btn-A" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] transition flex justify-between items-center font-bold">
+                <span>[A] AGILIDAD (AGILITY)</span>
+                <span class="px-2 py-0.5 border border-[var(--main-color)] rounded text-xs">9/10</span>
+              </button>
+              <button onclick="selectSpecial('L')" id="spec-btn-L" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] transition flex justify-between items-center font-bold">
+                <span>[L] SUERTE (LUCK)</span>
+                <span class="px-2 py-0.5 border border-[var(--main-color)] rounded text-xs">8/10</span>
+              </button>
+            </div>
+
+            <!-- Attribute Detail View Panel -->
+            <div class="lg:col-span-2 p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] flex flex-col justify-between">
+              <div>
+                <h3 id="special-title" class="text-xl font-bold border-b border-[var(--main-dim)] pb-2 mb-3 pip-glow">
+                  FUERZA: ARQUITECTURA BACKEND & SISTEMAS
+                </h3>
+                <p id="special-desc" class="text-sm sm:text-base leading-relaxed mb-4">
+                  Capacidad destructiva para construir APIs robustas, servidores a prueba de bombas y procesar millones de transacciones sin despeinarse.
+                </p>
+                
+                <!-- Skill Progress Bar -->
+                <div class="mb-4">
+                  <div class="flex justify-between text-xs font-bold mb-1">
+                    <span>NIVEL DE DOMINIO TÉCNICO</span>
+                    <span id="special-val-str">10 / 10 MAX</span>
+                  </div>
+                  <div class="meter-bar"><div id="special-meter" class="meter-fill" style="width: 100%;"></div></div>
+                </div>
+              </div>
+
+              <!-- Perks Cards Grid for Tech Stack -->
+              <div>
+                <h4 class="text-xs font-bold tracking-widest uppercase border-b border-[var(--main-dim)] pb-1 mb-2">
+                  TARJETAS PERK DE COMPONENTES
+                </h4>
+                <div id="special-perks" class="grid grid-cols-2 gap-2 text-xs">
+                  <!-- Dynamic perks injected via JS -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- 3. TAB: DATOS (DATA - QUEST LOG / EXPERIENCE) -->
+        <section id="content-data" class="tab-content hidden">
+          <!-- Sub Tabs -->
+          <div class="flex gap-4 border-b border-[var(--main-dim)] pb-2 mb-4 text-sm font-bold">
+            <button onclick="switchSubTab('data', 'principales')" id="subtab-data-principales" class="sub-btn active">MISIONES PRINCIPALES (EXPERIENCIA)</button>
+            <button onclick="switchSubTab('data', 'secundarias')" id="subtab-data-secundarias" class="sub-btn">MISIONES SECUNDARIAS (ESTUDIOS)</button>
+          </div>
+
+          <!-- Main Quests (Experience) -->
+          <div id="subcontent-data-principales" class="subcontent">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Quest List -->
+              <div class="space-y-2 md:col-span-1">
+                <button onclick="selectQuest(1)" id="quest-btn-1" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] font-bold text-xs sm:text-sm active">
+                  <div class="text-[var(--main-color)]">★ SENIOR FULL-STACK DEV</div>
+                  <div class="text-xs opacity-75">TechCorp Fallout Ops | 2022-Pres.</div>
+                </button>
+                <button onclick="selectQuest(2)" id="quest-btn-2" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] font-bold text-xs sm:text-sm">
+                  <div class="text-[var(--main-color)]">★ FULL-STACK DEVELOPER</div>
+                  <div class="text-xs opacity-75">CyberSolutions Inc | 2020-2022</div>
+                </button>
+                <button onclick="selectQuest(3)" id="quest-btn-3" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] font-bold text-xs sm:text-sm">
+                  <div class="text-[var(--main-color)]">★ FRONTEND DEVELOPER</div>
+                  <div class="text-xs opacity-75">WebVault Studio | 2018-2020</div>
+                </button>
+              </div>
+
+              <!-- Quest Details Panel -->
+              <div id="quest-details" class="md:col-span-2 p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] text-sm space-y-3">
+                <!-- Dynamically populated quest detail -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Side Quests (Education) -->
+          <div id="subcontent-data-secundarias" class="subcontent hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] space-y-2">
+                <div class="text-xs px-2 py-0.5 border border-[var(--main-color)] rounded inline-block font-bold">COMPLETADA</div>
+                <h4 class="font-bold text-base pip-glow">GRADO EN INGENIERÍA INFORMÁTICA</h4>
+                <p class="text-xs opacity-80">Universidad Tecnológica | 2014 - 2018</p>
+                <p class="text-xs leading-relaxed">Especialización en Ingeniería de Software, Algoritmos, Estructuras de Datos y Redes de Ordenadores.</p>
+              </div>
+
+              <div class="p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] space-y-2">
+                <div class="text-xs px-2 py-0.5 border border-[var(--main-color)] rounded inline-block font-bold">COMPLETADA</div>
+                <h4 class="font-bold text-base pip-glow">CERTIFICACIÓN AWS SOLUTIONS ARCHITECT</h4>
+                <p class="text-xs opacity-80">Amazon Web Services | Certificado Oficial</p>
+                <p class="text-xs leading-relaxed">Diseño e implementación de sistemas distribuidos y arquitectura cloud altamente disponible.</p>
+              </div>
+
+              <div class="p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] space-y-2">
+                <div class="text-xs px-2 py-0.5 border border-[var(--main-color)] rounded inline-block font-bold">COMPLETADA</div>
+                <h4 class="font-bold text-base pip-glow">CERTIFICADO PROFESIONAL REACT & NODE</h4>
+                <p class="text-xs opacity-80">Meta / Coursera | Especialización Web</p>
+                <p class="text-xs leading-relaxed">Desarrollo avanzado de Single Page Applications, gestión de estado y arquitecturas REST/GraphQL.</p>
+              </div>
+
+              <div class="p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] space-y-2">
+                <div class="text-xs px-2 py-0.5 border border-[var(--main-color)] rounded inline-block font-bold">EN CURSO</div>
+                <h4 class="font-bold text-base pip-glow">INVESTIGACIÓN EN IA Y LLM AGENTS</h4>
+                <p class="text-xs opacity-80">Autodidacta / Proyectos Open Source</p>
+                <p class="text-xs leading-relaxed">Integración de modelos de lenguaje con herramientas web y pipelines de datos en tiempo real.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- 4. TAB: INVENTARIO (ITEMS / PROJECTS) -->
+        <section id="content-items" class="tab-content hidden">
+          <!-- Item Category Filters -->
+          <div class="flex flex-wrap gap-2 mb-4 text-xs font-bold">
+            <button onclick="filterItems('all')" id="item-filter-all" class="px-3 py-1 rounded border border-[var(--main-color)] bg-[var(--main-color)] text-[var(--bg-dark)]">TODOS</button>
+            <button onclick="filterItems('armas')" id="item-filter-armas" class="px-3 py-1 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)]">ARMAS (APPS)</button>
+            <button onclick="filterItems('atuendos')" id="item-filter-atuendos" class="px-3 py-1 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)]">ATUENDOS (UI/UX)</button>
+            <button onclick="filterItems('varios')" id="item-filter-varios" class="px-3 py-1 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)]">VARIOS (TOOLS)</button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Items List -->
+            <div id="items-list" class="space-y-2 max-h-96 overflow-y-auto pr-1">
+              <!-- Dynamically populated inventory items -->
+            </div>
+
+            <!-- Item Inspection Panel -->
+            <div id="item-inspect" class="md:col-span-2 p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] flex flex-col justify-between">
+              <!-- Dynamically populated item inspection detail -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- 5. TAB: RADIO & TRANSMISIÓN (RADIO) -->
+        <section id="content-radio" class="tab-content hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Synth Radio Station Tuner -->
+            <div class="p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] space-y-4">
+              <h3 class="text-lg font-bold border-b border-[var(--main-dim)] pb-2 pip-glow flex justify-between items-center">
+                <span>📻 REPRODUCTOR DE EMISORA HOLOCINTA</span>
+                <span id="radio-signal-indicator" class="text-xs px-2 py-0.5 rounded bg-green-900/60 text-green-300 border border-green-500">SEÑAL CLARA</span>
+              </h3>
+
+              <div class="space-y-2">
+                <button onclick="tuneRadio(1)" id="radio-station-1" class="w-full text-left p-3 rounded border border-[var(--main-dim)] bg-[var(--main-dim)] font-bold text-sm flex justify-between items-center active">
+                  <span>GALAXY NEWS RADIO - AIHEN SYNTH BEATS</span>
+                  <span class="text-xs">98.4 Mhz</span>
+                </button>
+                <button onclick="tuneRadio(2)" id="radio-station-2" class="w-full text-left p-3 rounded border border-[var(--main-dim)] bg-transparent font-bold text-sm flex justify-between items-center">
+                  <span>EMISORA DEL ENCLAVE - CODEX TRANSMISIÓN</span>
+                  <span class="text-xs">104.1 Mhz</span>
+                </button>
+                <button onclick="tuneRadio(0)" id="radio-station-0" class="w-full text-left p-3 rounded border border-[var(--main-dim)] bg-transparent font-bold text-sm flex justify-between items-center">
+                  <span>[APAGAR EMISORA DE RADIO]</span>
+                  <span class="text-xs">OFF</span>
+                </button>
+              </div>
+
+              <!-- Interactive Tuner Dial Visualizer -->
+              <div class="p-3 border border-[var(--main-dim)] rounded bg-black/40 text-center">
+                <div class="text-xs opacity-75 mb-1">FRECUENCIA DE TRANSMISIÓN ACTIVE</div>
+                <div id="radio-frequency-display" class="font-vt323 text-3xl tracking-widest text-[var(--main-color)] pip-glow">
+                  98.4 FM - SINTONIZADO
+                </div>
+                <div class="w-full h-2 bg-neutral-800 rounded mt-2 overflow-hidden relative">
+                  <div id="radio-dial-needle" class="w-2 h-full bg-[var(--main-color)] absolute left-1/2 -translate-x-1/2 transition-all duration-500"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terminal Contact Form -->
+            <div class="p-4 border border-[var(--main-dim)] rounded bg-[var(--panel-bg)] space-y-3">
+              <h3 class="text-lg font-bold border-b border-[var(--main-dim)] pb-2 pip-glow">
+                📟 TERMINAL DE ENVIAR HOLOCINTA (CONTACTO)
+              </h3>
+
+              <form id="contact-form" onsubmit="sendHolotape(event)" class="space-y-3 text-xs sm:text-sm">
+                <div>
+                  <label class="block font-bold mb-1">EMISOR (TU NOMBRE):</label>
+                  <input type="text" required id="contact-name" class="w-full p-2 bg-black/60 border border-[var(--main-dim)] rounded focus:outline-none focus:border-[var(--main-color)] text-[var(--main-color)] font-mono">
+                </div>
+
+                <div>
+                  <label class="block font-bold mb-1">FRECUENCIA DE RESPUESTA (EMAIL):</label>
+                  <input type="email" required id="contact-email" class="w-full p-2 bg-black/60 border border-[var(--main-dim)] rounded focus:outline-none focus:border-[var(--main-color)] text-[var(--main-color)] font-mono">
+                </div>
+
+                <div>
+                  <label class="block font-bold mb-1">MENSAJE ENCRIPTADO:</label>
+                  <textarea required id="contact-msg" rows="3" class="w-full p-2 bg-black/60 border border-[var(--main-dim)] rounded focus:outline-none focus:border-[var(--main-color)] text-[var(--main-color)] font-mono"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-2 bg-[var(--main-color)] text-[var(--bg-dark)] font-bold rounded hover:opacity-90 transition pip-glow">
+                  TRANSMITIR MENSAJE A AIHEN ESPARZA
+                </button>
+              </form>
+
+              <!-- Terminal Output Log Animation -->
+              <div id="terminal-output" class="hidden p-2.5 border border-[var(--main-dim)] bg-black/70 rounded text-xs font-mono min-h-[60px] text-green-400">
+              </div>
+
+              <!-- Social Frequencies Links -->
+              <div class="pt-2 border-t border-[var(--main-dim)] flex flex-wrap gap-3 text-xs justify-between">
+                <a href="https://github.com" target="_blank" rel="noopener" class="hover:underline flex items-center gap-1">🌐 GITHUB</a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener" class="hover:underline flex items-center gap-1">💼 LINKEDIN</a>
+                <a href="mailto:aihen.esparza@example.com" class="hover:underline flex items-center gap-1">✉️ EMAIL DIRECTO</a>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- PIP-BOY FOOTER STATUS -->
+      <footer class="border-t-2 border-[var(--main-color)] pt-2 mt-4 flex flex-wrap justify-between items-center text-xs opacity-90">
+        <div>ROBCO PIP-BOY OS v3.0.2</div>
+        <div id="pip-clock" class="font-bold">--:--:--</div>
+        <div>MEMORIA: 640K OK</div>
+      </footer>
+    </div>
+  </div>
+
+
+  <!-- ==================== TERMINAL HACK EASTER EGG MODAL ==================== -->
+  <div id="terminal-modal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 hidden no-print">
+    <div class="w-full max-w-2xl border-2 border-green-500 bg-black p-4 rounded font-mono text-green-400 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-green-600 pb-2">
+        <h2 class="text-base font-bold">ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL</h2>
+        <button onclick="closeTerminalHack()" class="text-red-500 font-bold px-2 border border-red-500 rounded">[X] CERRAR</button>
+      </div>
+
+      <div class="text-xs space-y-1">
+        <p>SE REQUIERE AUTENTICACIÓN DE SEGURIDAD PARA ACCESO TOTAL.</p>
+        <p>INTENTOS RESTANTES: <span id="hack-attempts" class="font-bold text-yellow-400">4</span> ████</p>
+      </div>
+
+      <!-- Hack Grid Area -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono my-4 p-2 border border-green-900 bg-neutral-950">
+        <div id="hack-words-col1" class="space-y-1"></div>
+        <div id="hack-words-col2" class="space-y-1"></div>
+      </div>
+
+      <!-- Terminal Output Log -->
+      <div id="hack-log" class="p-2 border border-green-900 bg-neutral-950 text-xs h-24 overflow-y-auto font-mono">
+        > SELECCIONA UNA PALABRA PARA COMPROBAR CONTRASEÑA...
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    /* ==================== WEB AUDIO API SYNTHESIZER ==================== */
+    let audioCtx = null;
+    let soundEnabled = true;
+    let currentRadioOsc = null;
+    let currentRadioGain = null;
+    let radioInterval = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const soundIcon = document.getElementById('sound-icon');
+      const soundText = document.getElementById('sound-text');
+      
+      if (soundEnabled) {
+        soundIcon.textContent = '🔊';
+        soundText.textContent = 'SONIDO: ON';
+        playBeep(800, 0.08, 'sine');
+      } else {
+        soundIcon.textContent = '🔇';
+        soundText.textContent = 'SONIDO: OFF';
+        stopRadioSynth();
+      }
+    }
+
+    function playBeep(freq = 600, duration = 0.05, type = 'square', gainVal = 0.05) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.log('Audio playback error', e);
+      }
+    }
+
+    function playClick() {
+      playBeep(1200, 0.03, 'square', 0.04);
+    }
+
+    function playTabSound() {
+      playBeep(400, 0.04, 'sine', 0.06);
+      setTimeout(() => playBeep(800, 0.06, 'sine', 0.06), 40);
+    }
+
+    function playGeiger() {
+      if (!soundEnabled) return;
+      playBeep(1500 + Math.random() * 800, 0.01, 'sawtooth', 0.03);
+    }
+
+    /* Radio Ambient Synth Arpeggiator */
+    function startRadioSynth(stationId) {
+      stopRadioSynth();
+      if (!soundEnabled || stationId === 0) return;
+
+      initAudio();
+      const notes = stationId === 1 
+        ? [261.63, 329.63, 392.00, 523.25, 392.00, 329.63] // C major arpeggio
+        : [220.00, 261.63, 329.63, 440.00, 329.63, 261.63]; // A minor retro vibe
+
+      let noteIdx = 0;
+      radioInterval = setInterval(() => {
+        if (!soundEnabled) return;
+        playBeep(notes[noteIdx], 0.12, 'triangle', 0.03);
+        noteIdx = (noteIdx + 1) % notes.length;
+      }, 250);
+    }
+
+    function stopRadioSynth() {
+      if (radioInterval) {
+        clearInterval(radioInterval);
+        radioInterval = null;
+      }
+    }
+
+
+    /* ==================== THEME & CRT CONTROLS ==================== */
+    function setTheme(theme) {
+      playClick();
+      document.body.className = document.body.className.replace(/theme-\w+/g, '');
+      if (theme !== 'green') {
+        document.body.classList.add(`theme-${theme}`);
+      }
+    }
+
+    function toggleScanlines() {
+      playClick();
+      const screen = document.getElementById('crt-container');
+      screen.classList.toggle('scanlines');
+      screen.classList.toggle('crt-flicker');
+    }
+
+    /* ==================== TAB NAVIGATION ==================== */
+    function switchTab(tabId) {
+      playTabSound();
+      
+      // Hide all contents
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+
+      // Show selected tab content
+      document.getElementById(`content-${tabId}`).classList.remove('hidden');
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+    }
+
+    function switchSubTab(parentTab, subId) {
+      playClick();
+      const container = document.getElementById(`content-${parentTab}`);
+      container.querySelectorAll('.subcontent').forEach(el => el.classList.add('hidden'));
+      container.querySelectorAll('.sub-btn').forEach(el => el.classList.remove('active'));
+
+      document.getElementById(`subcontent-${parentTab}-${subId}`).classList.remove('hidden');
+      document.getElementById(`subtab-${parentTab}-${subId}`).classList.add('active');
+    }
+
+
+    /* ==================== S.P.E.C.I.A.L. DATA & LOGIC ==================== */
+    const specialData = {
+      S: {
+        title: "FUERZA: ARQUITECTURA BACKEND & SISTEMAS",
+        desc: "Capacidad destructiva para construir APIs robustas, servidores a prueba de bombas y procesar millones de transacciones sin despeinarse.",
+        val: "10 / 10 MAX",
+        pct: "100%",
+        perks: [
+          { name: "Node.js / Express", desc: "Motores de alto rendimiento" },
+          { name: "Python / FastAPI", desc: "Procesamiento ágil de datos" },
+          { name: "PostgreSQL & Mongo", desc: "Bóvedas de datos blindadas" },
+          { name: "Redis Caching", desc: "Velocidad de ejecución crítica" }
+        ]
+      },
+      P: {
+        title: "PERCEPCIÓN: UI/UX & PIXEL PERFECTION",
+        desc: "Detección instantánea de desalineaciones de píxeles, animaciones toscas e ineficiencias de usabilidad en interfaces web.",
+        val: "9 / 10",
+        pct: "90%",
+        perks: [
+          { name: "React & Next.js", desc: "Interfaces dinámicas reactivas" },
+          { name: "Tailwind CSS", desc: "Estilizado atómico rápido" },
+          { name: "Responsive Design", desc: "Adaptabilidad universal" },
+          { name: "Accesibilidad WCAG", desc: "Legibilidad para todo morador" }
+        ]
+      },
+      E: {
+        title: "RESISTENCIA: SPRINT DEADLINES & BUG FIXING",
+        desc: "Gran tolerancia al estrés en entregas críticas y capacidad de debugging ininterrumpido en despliegues complejos.",
+        val: "10 / 10 MAX",
+        pct: "100%",
+        perks: [
+          { name: "Pruebas E2E / Jest", desc: "Inmunidad ante regresiones" },
+          { name: "Refactorización", desc: "Limpieza de código antiguo" },
+          { name: "Optimización Vitals", desc: "Carga rápida instantánea" },
+          { name: "Seguridad Web", desc: "Protección contra exploits" }
+        ]
+      },
+      C: {
+        title: "CARISMA: LIDERAZGO & COMUNICACIÓN",
+        desc: "Habilidad para coordinar equipos multidisciplinares, negociar requerimientos con clientes y mentorizar desarrolladores junior.",
+        val: "9 / 10",
+        pct: "90%",
+        perks: [
+          { name: "Metodología Scrum", desc: "Gestión de sprints fluida" },
+          { name: "Code Review", desc: "Feedback constructivo" },
+          { name: "Documentación Clear", desc: "Holocintas de arquitectura" },
+          { name: "Comunicación Client", desc: "Traducción técnico/negocio" }
+        ]
+      },
+      I: {
+        title: "INTELIGENCIA: ESTRUCTURAS DE DATOS & IA",
+        desc: "Dominio de algoritmos avanzados, integración de modelos de Inteligencia Artificial y diseño de arquitecturas escalables.",
+        val: "10 / 10 MAX",
+        pct: "100%",
+        perks: [
+          { name: "Integración LLM / IA", desc: "Conexión con agentes API" },
+          { name: "Arquitectura Cloud", desc: "AWS, Docker, Microservicios" },
+          { name: "GraphQL & REST", desc: "Contratos de datos precisos" },
+          { name: "Algoritmos Complejos", desc: "Resolución matemática" }
+        ]
+      },
+      A: {
+        title: "AGILIDAD: CI/CD & RAPID PROTOTYPING",
+        desc: "Despliegue ultrarrápido de prototipos funcionales y automatización de pipelines de integración continua.",
+        val: "9 / 10",
+        pct: "90%",
+        perks: [
+          { name: "GitHub Actions", desc: "Automatización de builds" },
+          { name: "Docker Containers", desc: "Entornos aislados idénticos" },
+          { name: "Vercel / AWS Amplify", desc: "Despliegues en un click" },
+          { name: "Git Workflow", desc: "Control de versiones ordenado" }
+        ]
+      },
+      L: {
+        title: "SUERTE: RESOLUCIÓN EN STACK OVERFLOW",
+        desc: "Inexplicable intuición para encontrar la respuesta exacta a bugs bizarros en hilos archivados del año 2012.",
+        val: "8 / 10",
+        pct: "80%",
+        perks: [
+          { name: "Intuición Debug", desc: "Hallazgo de memory leaks" },
+          { name: "Adaptabilidad", desc: "Aprender frameworks en horas" },
+          { name: "Workarounds", desc: "Soluciones creativas a bloqueos" },
+          { name: "Parches Rápidos", desc: "Hotfixes en producción" }
+        ]
+      }
+    };
+
+    function selectSpecial(key) {
+      playClick();
+      
+      // Update buttons style
+      ['S','P','E','C','I','A','L'].forEach(k => {
+        const btn = document.getElementById(`spec-btn-${k}`);
+        if (btn) btn.classList.remove('active', 'bg-[var(--main-dim)]');
+      });
+      document.getElementById(`spec-btn-${key}`).classList.add('active', 'bg-[var(--main-dim)]');
+
+      // Update Detail content
+      const data = specialData[key];
+      document.getElementById('special-title').textContent = data.title;
+      document.getElementById('special-desc').textContent = data.desc;
+      document.getElementById('special-val-str').textContent = data.val;
+      document.getElementById('special-meter').style.width = data.pct;
+
+      // Render perks
+      const perksContainer = document.getElementById('special-perks');
+      perksContainer.innerHTML = data.perks.map(p => `
+        <div class="p-2 border border-[var(--main-dim)] rounded bg-black/40">
+          <div class="font-bold text-[var(--main-color)]">★ ${p.name}</div>
+          <div class="opacity-75 text-[10px]">${p.desc}</div>
+        </div>
+      `).join('');
+    }
+
+
+    /* ==================== QUEST DATA & LOGIC ==================== */
+    const quests = {
+      1: {
+        role: "SENIOR FULL-STACK DEVELOPER",
+        company: "TechCorp Fallout Ops",
+        period: "2022 - Presente",
+        status: "EN PROGRESO / ACTIVA",
+        objectives: [
+          "Liderar la migración de arquitectura monolítica a microservicios con React y Node.js.",
+          "Reducir los tiempos de carga en un 45% mediante optimización de consultas SQL y caché Redis.",
+          "Mentorizar a un equipo de 5 desarrolladores e implementar estándares de código limpio.",
+          "Integrar servicios de IA para automatización de flujos de trabajo de clientes."
+        ]
+      },
+      2: {
+        role: "FULL-STACK DEVELOPER",
+        company: "CyberSolutions Inc",
+        period: "2020 - 2022",
+        status: "COMPLETADA CON ÉXITO",
+        objectives: [
+          "Diseñar e implementar más de 20 APIs RESTful y GraphQL con TypeScript y Express.",
+          "Construir dashboards reactivos de alta complejidad con React, Redux y Tailwind CSS.",
+          "Implementar pipelines CI/CD automatizados reduciendo fallos de despliegue a cero."
+        ]
+      },
+      3: {
+        role: "FRONTEND DEVELOPER",
+        company: "WebVault Studio",
+        period: "2018 - 2020",
+        status: "COMPLETADA CON ÉXITO",
+        objectives: [
+          "Desarrollar interfaces web responsivas y accesibles para clientes internacionales.",
+          "Colaborar estrechamente con diseñadores UI/UX para implementar prototipos en Figma.",
+          "Mejorar la puntuación de Google Lighthouse de los sitios web al 95+."
+        ]
+      }
+    };
+
+    function selectQuest(id) {
+      playClick();
+      
+      [1, 2, 3].forEach(qId => {
+        const btn = document.getElementById(`quest-btn-${qId}`);
+        if (btn) btn.classList.remove('active', 'bg-[var(--main-dim)]');
+      });
+      document.getElementById(`quest-btn-${id}`).classList.add('active', 'bg-[var(--main-dim)]');
+
+      const q = quests[id];
+      const details = document.getElementById('quest-details');
+      details.innerHTML = `
+        <div class="flex justify-between items-center border-b border-[var(--main-dim)] pb-2">
+          <div>
+            <h3 class="font-bold text-base sm:text-lg pip-glow">${q.role}</h3>
+            <div class="text-xs opacity-80">${q.company} (${q.period})</div>
+          </div>
+          <span class="text-xs px-2 py-0.5 border border-[var(--main-color)] rounded font-bold">${q.status}</span>
+        </div>
+
+        <div class="space-y-2 pt-2">
+          <h4 class="font-bold text-xs tracking-wider uppercase">OBJETIVOS DE MISIÓN CUMPLIDOS:</h4>
+          <ul class="space-y-1.5 text-xs sm:text-sm">
+            ${q.objectives.map(obj => `
+              <li class="flex items-start gap-2">
+                <span class="text-green-400 font-bold">[✔]</span>
+                <span>${obj}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+
+    /* ==================== INVENTORY / PROJECTS DATA & LOGIC ==================== */
+    const inventoryItems = [
+      {
+        id: 1,
+        cat: 'armas',
+        name: 'PIP-BOY 3000 CV WEB APP',
+        weight: '3.5 LB',
+        val: '2,500 Ͼ',
+        tech: 'React / HTML5 / Web Audio API',
+        desc: 'Aplicación web interactiva retro-futurista con efectos de sonido sintetizados y gestión dinámica de temas.',
+        demo: '#',
+        github: 'https://github.com'
+      },
+      {
+        id: 2,
+        cat: 'armas',
+        name: 'NUKA-CLOUD MANAGEMENT API',
+        weight: '5.0 LB',
+        val: '4,100 Ͼ',
+        tech: 'Node.js / Express / PostgreSQL / Docker',
+        desc: 'API RESTful de alto rendimiento para gestión de inventarios y datos masivos en la nube.',
+        demo: '#',
+        github: 'https://github.com'
+      },
+      {
+        id: 3,
+        cat: 'atuendos',
+        name: 'VAULT-TEC DESIGN SYSTEM',
+        weight: '1.2 LB',
+        val: '1,800 Ͼ',
+        tech: 'Tailwind CSS / Storybook / TypeScript',
+        desc: 'Librería de componentes UI accesible y responsiva inspirada en interfaces retro de terminales.',
+        demo: '#',
+        github: 'https://github.com'
+      },
+      {
+        id: 4,
+        cat: 'varios',
+        name: 'QUANTUM SEARCH ENGINE',
+        weight: '0.8 LB',
+        val: '3,200 Ͼ',
+        tech: 'Python / Elasticsearch / OpenAI API',
+        desc: 'Buscador semántico alimentado por IA para extracción instantánea de información técnica.',
+        demo: '#',
+        github: 'https://github.com'
+      }
+    ];
+
+    let currentItemFilter = 'all';
+
+    function filterItems(category) {
+      playClick();
+      currentItemFilter = category;
+      
+      ['all', 'armas', 'atuendos', 'varios'].forEach(cat => {
+        const btn = document.getElementById(`item-filter-${cat}`);
+        if (btn) {
+          btn.className = cat === category
+            ? "px-3 py-1 rounded border border-[var(--main-color)] bg-[var(--main-color)] text-[var(--bg-dark)] font-bold"
+            : "px-3 py-1 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] font-bold";
+        }
+      });
+
+      renderItemsList();
+    }
+
+    function renderItemsList() {
+      const listContainer = document.getElementById('items-list');
+      const filtered = currentItemFilter === 'all' 
+        ? inventoryItems 
+        : inventoryItems.filter(i => i.cat === currentItemFilter);
+
+      listContainer.innerHTML = filtered.map((item, idx) => `
+        <button onclick="inspectItem(${item.id})" id="item-btn-${item.id}" class="w-full text-left p-2.5 rounded border border-[var(--main-dim)] bg-[var(--panel-bg)] hover:bg-[var(--main-dim)] font-bold text-xs flex justify-between items-center ${idx === 0 ? 'active bg-[var(--main-dim)]' : ''}">
+          <span>${item.name}</span>
+          <span class="text-[10px] opacity-75">${item.val}</span>
+        </button>
+      `).join('');
+
+      if (filtered.length > 0) {
+        inspectItem(filtered[0].id);
+      }
+    }
+
+    function inspectItem(id) {
+      playClick();
+      
+      inventoryItems.forEach(i => {
+        const btn = document.getElementById(`item-btn-${i.id}`);
+        if (btn) btn.classList.remove('active', 'bg-[var(--main-dim)]');
+      });
+      
+      const activeBtn = document.getElementById(`item-btn-${id}`);
+      if (activeBtn) activeBtn.classList.add('active', 'bg-[var(--main-dim)]');
+
+      const item = inventoryItems.find(i => i.id === id);
+      const inspectPanel = document.getElementById('item-inspect');
+      
+      inspectPanel.innerHTML = `
+        <div class="space-y-3">
+          <div class="flex justify-between items-start border-b border-[var(--main-dim)] pb-2">
+            <div>
+              <h3 class="text-base sm:text-lg font-bold pip-glow">${item.name}</h3>
+              <div class="text-xs opacity-75 font-mono">TECNOLOGÍAS: ${item.tech}</div>
+            </div>
+            <div class="text-right text-xs">
+              <div>PESO: <strong class="text-[var(--main-color)]">${item.weight}</strong></div>
+              <div>VALOR: <strong class="text-yellow-400">${item.val}</strong></div>
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm leading-relaxed opacity-90">${item.desc}</p>
+        </div>
+
+        <div class="pt-4 border-t border-[var(--main-dim)] flex flex-wrap gap-2 text-xs">
+          <a href="${item.github}" target="_blank" rel="noopener" class="flex-1 text-center py-2 px-3 border border-[var(--main-color)] bg-[var(--main-dim)] rounded font-bold hover:bg-[var(--main-color)] hover:text-[var(--bg-dark)] transition">
+            📂 CÓDIGO FUENTE (GITHUB)
+          </a>
+          <button onclick="playBeep(900,0.1,'sine')" class="flex-1 text-center py-2 px-3 border border-[var(--main-color)] rounded font-bold hover:bg-[var(--main-dim)] transition">
+            ⚡ PROBAR DEMO EN VIVO
+          </button>
+        </div>
+      `;
+    }
+
+
+    /* ==================== RADIO & CONTACT TERMINAL ==================== */
+    function tuneRadio(stationId) {
+      playClick();
+      
+      [0, 1, 2].forEach(sId => {
+        const btn = document.getElementById(`radio-station-${sId}`);
+        if (btn) {
+          btn.className = sId === stationId
+            ? "w-full text-left p-3 rounded border border-[var(--main-dim)] bg-[var(--main-dim)] font-bold text-sm flex justify-between items-center active"
+            : "w-full text-left p-3 rounded border border-[var(--main-dim)] bg-transparent font-bold text-sm flex justify-between items-center";
+        }
+      });
+
+      const freqDisplay = document.getElementById('radio-frequency-display');
+      const needle = document.getElementById('radio-dial-needle');
+
+      if (stationId === 1) {
+        freqDisplay.textContent = "98.4 FM - GALAXY NEWS RADIO";
+        needle.style.left = "40%";
+        startRadioSynth(1);
+      } else if (stationId === 2) {
+        freqDisplay.textContent = "104.1 FM - EMISORA ENCLAVE";
+        needle.style.left = "75%";
+        startRadioSynth(2);
+      } else {
+        freqDisplay.textContent = "EMISORA APAGADA";
+        needle.style.left = "10%";
+        stopRadioSynth();
+      }
+    }
+
+    function sendHolotape(e) {
+      e.preventDefault();
+      playClick();
+
+      const name = document.getElementById('contact-name').value;
+      const output = document.getElementById('terminal-output');
+      output.classList.remove('hidden');
+      output.innerHTML = `> INICIANDO TRANSMISIÓN...<br>> CODIFICANDO MENSAJE DE ${name.toUpperCase()}...`;
+
+      let step = 0;
+      const interval = setInterval(() => {
+        playBeep(1000 + Math.random() * 400, 0.02, 'square');
+        step++;
+        if (step === 1) {
+          output.innerHTML += `<br>> ESTABLECIENDO ENLACE CON BÓVEDA DE AIHEN ESPARZA...`;
+        } else if (step === 2) {
+          output.innerHTML += `<br>> CHECKSUM OK. TRANSMISIÓN ENVIADA CON ÉXITO [200 OK]`;
+          clearInterval(interval);
+          document.getElementById('contact-form').reset();
+        }
+      }, 700);
+    }
+
+
+    /* ==================== TERMINAL HACK EASTER EGG ==================== */
+    const hackWords = ["REACT", "VAULT", "NODES", "PIPEL", "CLOUDS", "REDIS", "SCRUM", "DOCKER", "PYTHON", "ARRAYS"];
+    let secretWord = "";
+    let hackAttemptsLeft = 4;
+
+    function openTerminalHack() {
+      playClick();
+      hackAttemptsLeft = 4;
+      document.getElementById('hack-attempts').textContent = hackAttemptsLeft;
+      document.getElementById('hack-log').innerHTML = "> SELECCIONA UNA PALABRA PARA COMPROBAR CONTRASEÑA...";
+      
+      secretWord = hackWords[Math.floor(Math.random() * hackWords.length)];
+
+      const col1 = document.getElementById('hack-words-col1');
+      const col2 = document.getElementById('hack-words-col2');
+      col1.innerHTML = "";
+      col2.innerHTML = "";
+
+      hackWords.forEach((word, idx) => {
+        const hex = "0x" + (0x7E00 + idx * 12).toString(16).toUpperCase();
+        const html = `<div class="cursor-pointer hover:bg-green-900/60 p-0.5 rounded" onclick="checkHackWord('${word}')">${hex}  ${word}</div>`;
+        if (idx < 5) col1.innerHTML += html;
+        else col2.innerHTML += html;
+      });
+
+      document.getElementById('terminal-modal').classList.remove('hidden');
+    }
+
+    function checkHackWord(word) {
+      playClick();
+      const log = document.getElementById('hack-log');
+
+      if (word === secretWord) {
+        playBeep(1200, 0.2, 'sine');
+        log.innerHTML += `<br><span class="text-yellow-400 font-bold">> ACCESO CONCEDIDO! BIENVENIDO ADMINISTRADOR AIHEN ESPARZA.</span>`;
+        return;
+      }
+
+      hackAttemptsLeft--;
+      document.getElementById('hack-attempts').textContent = hackAttemptsLeft;
+
+      // Calculate likeness
+      let likeness = 0;
+      for (let i = 0; i < Math.min(word.length, secretWord.length); i++) {
+        if (word[i] === secretWord[i]) likeness++;
+      }
+
+      log.innerHTML += `<br>> CONTRASEÑA INCORRECTA: '${word}'. COINCIDENCIAS: ${likeness}/${secretWord.length}`;
+
+      if (hackAttemptsLeft <= 0) {
+        log.innerHTML += `<br><span class="text-red-500 font-bold">> TERMINAL BLOQUEADA. INICIANDO REINICIO...</span>`;
+      }
+    }
+
+    function closeTerminalHack() {
+      playClick();
+      document.getElementById('terminal-modal').classList.add('hidden');
+    }
+
+
+    /* ==================== PRINT & PDF EXPORT ==================== */
+    function triggerPrint() {
+      playClick();
+      window.print();
+    }
+
+
+    /* ==================== REALTIME CLOCK ==================== */
+    function updateClock() {
+      const now = new Date();
+      const str = now.toLocaleTimeString('es-ES', { hour12: false });
+      const clockEl = document.getElementById('pip-clock');
+      if (clockEl) clockEl.textContent = `HORA: ${str}`;
+    }
+    setInterval(updateClock, 1000);
+
+
+    /* ==================== KEYBOARD NAVIGATION ==================== */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '1') switchTab('stat');
+      if (e.key === '2') switchTab('special');
+      if (e.key === '3') switchTab('data');
+      if (e.key === '4') switchTab('items');
+      if (e.key === '5') switchTab('radio');
+    });
+
+
+    /* ==================== INITIALIZATION ==================== */
+    window.onload = function() {
+      updateClock();
+      selectSpecial('S');
+      selectQuest(1);
+      renderItemsList();
+
+      // Subtle ambient Geiger noise
+      setInterval(() => {
+        if (Math.random() < 0.2) playGeiger();
+      }, 3000);
+    };
+  </script>
+</body>
+</html>
